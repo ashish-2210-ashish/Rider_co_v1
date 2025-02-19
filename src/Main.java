@@ -61,6 +61,8 @@ class Ride {
         this.destinationY = y;
         this.timeTaken = time;
         this.isCompleted = true;
+
+        // Mark driver as available
         driver.setAvailable(true);
         driver.setLocation(x, y);
 
@@ -86,12 +88,12 @@ class Ride {
 }
 
 public class Main {
-    private static Map<String, Driver> drivers = new HashMap<>();
-    private static Map<String, Rider> riders = new HashMap<>();
-    private static Map<String, Ride> rides = new HashMap<>();
-    private static Map<String, List<Driver>> matchedDrivers = new HashMap<>();
+    private Map<String, Driver> drivers = new HashMap<>();
+    private Map<String, Rider> riders = new HashMap<>();
+    private Map<String, Ride> rides = new HashMap<>();
+    private Map<String, List<Driver>> matchedDrivers = new HashMap<>();
 
-    public static void main(String[] args) {
+    public void processCommands() {
         Scanner scanner = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
@@ -115,12 +117,15 @@ public class Main {
                 case "BILL":
                     billRide(input[1]);
                     break;
+                case "CHECK_DRIVER":
+                    checkDriver(input[1]);
+                    break;
             }
         }
         scanner.close();
     }
 
-    private static void matchRider(String riderId) {
+    private void matchRider(String riderId) {
         Rider rider = riders.get(riderId);
         if (rider == null) {
             System.out.println("INVALID_RIDER");
@@ -149,7 +154,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void startRide(String rideId, int driverNumber, String riderId) {
+    private void startRide(String rideId, int driverNumber, String riderId) {
         List<Driver> nearbyDrivers = matchedDrivers.get(riderId);
         if (nearbyDrivers == null || driverNumber < 1 || driverNumber > nearbyDrivers.size() || !riders.containsKey(riderId)) {
             System.out.println("INVALID_RIDE");
@@ -163,21 +168,41 @@ public class Main {
         System.out.println("RIDE_STARTED " + rideId);
     }
 
-    private static void stopRide(String rideId, int x, int y, int time) {
+    private void stopRide(String rideId, int x, int y, int time) {
         Ride ride = rides.get(rideId);
         if (ride == null) {
             System.out.println("INVALID_RIDE");
             return;
         }
         ride.stopRide(x, y, time);
+
+
+        Driver driver = ride.getDriver();
+        driver.setAvailable(true);
+        driver.setLocation(x, y);
+        drivers.put(driver.getId(), driver);
     }
 
-    private static void billRide(String rideId) {
+    private void billRide(String rideId) {
         Ride ride = rides.get(rideId);
         if (ride == null || !ride.isCompleted()) {
             System.out.println("INVALID_RIDE");
             return;
         }
         ride.calculateFare();
+    }
+
+    private void checkDriver(String driverId) {
+        Driver driver = drivers.get(driverId);
+        if (driver == null) {
+            System.out.println("INVALID_DRIVER");
+        } else {
+            System.out.println(driver.isAvailable() ? "AVAILABLE" : "NOT_AVAILABLE");
+        }
+    }
+
+    public static void main(String[] args) {
+        Main rideSystem = new Main();
+        rideSystem.processCommands();
     }
 }
