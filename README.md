@@ -1,7 +1,19 @@
+# Changes Made
+
+- Removed `static` from all methods to avoid side effects in JUnit testing.
+- Merged all methods into a single file (`RideService.java`).
+- Combined all test cases into one file (`RideServiceTest.java`).
+- Defined `Driver`, `Rider`, and `Ride` as global classes in `RideService.java`.
+
+
+## Repo of the previous code (decomposed one)- https://github.com/ashish-2210-ashish/Rider_C0.git
+
+---
+
 # The Rider Co. - Ride Hailing System
 
 ## Problem Statement
-You are tasked with building a solution that will help match riders with drivers based on their location and generate a bill for the ride.
+Building a solution that will help match riders with drivers based on their location and generate a bill for the ride.
 
 ## Input Commands & Format
 
@@ -72,3 +84,31 @@ BILL <RIDE_ID> <DRIVER_ID> <AMOUNT>
 4. One rider can make multiple match requests.
 5. Bill for the ride will be calculated based on the distance between the rider's location and the destination.
 6. The driver will not be available to accept another rider's request after the ride has started.
+
+
+## Sample inputs:
+
+ADD_DRIVER D1 2 3
+
+ADD_DRIVER D2 5 6
+
+ADD_DRIVER D3 1 1
+
+ADD_DRIVER D4 7 8
+
+ADD_DRIVER D5 10 10
+
+ADD_RIDER R1 3 3
+
+MATCH R1
+
+START_RIDE RIDE101 1 R1
+
+STOP_RIDE RIDE101 8 8 10
+
+CHECK_DRIVER D1
+
+BILL RIDE101
+
+
+

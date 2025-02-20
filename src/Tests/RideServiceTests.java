@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-class RideService {
+class RideServiceTests {
     private Services.RideService rideService;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
