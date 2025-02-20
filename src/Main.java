@@ -62,7 +62,6 @@ class Ride {
         this.timeTaken = time;
         this.isCompleted = true;
 
-        // Mark driver as available
         driver.setAvailable(true);
         driver.setLocation(x, y);
 
