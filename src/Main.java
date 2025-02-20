@@ -146,7 +146,7 @@ public class Main {
         nearbyDrivers.sort(Comparator.comparingDouble(d -> d.distanceTo(rider.getX(), rider.getY())));
         matchedDrivers.put(riderId, nearbyDrivers);
 
-        System.out.print("DRIVERS_MATCHED");
+        System.out.print("DRIVERS_MATCHED ");
         for (int i = 0; i < Math.min(5, nearbyDrivers.size()); i++) {
             System.out.print(" " + nearbyDrivers.get(i).getId());
         }
